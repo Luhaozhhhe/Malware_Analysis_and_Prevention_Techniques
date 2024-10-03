@@ -1,0 +1,53 @@
+rule lab11exe
+{
+strings:
+	$string1 = "Lab01-01.dll"
+	$string2 = "kerne132.dll"
+	$string3 = "C:\\windows\\system32\\kerne132.dll"
+	$string4 = "FindFirstFile"
+	$string5 = "FindNextFile"
+	$string6 = "CopyFile"
+condition:
+	filesize < 10MB and uint16(0) == 0x5A4D and uint16(uint16(0x3C)) == 0x00004550 and $string1 and $string2 and $string3 and $string4 and $string5 and $string6
+}
+rule lab11dll
+{
+strings:
+	$string1 = "sleep"
+	$string2 = "exec" 
+	$string3 = "CreateProcessA"
+condition:
+	filesize < 10MB and uint16(0) == 0x5A4D and uint16(uint16(0x3C)) == 0x00004550 and $string1 and $string2 and $string3
+}
+
+rule lab12exe
+{
+strings:
+	$string1 = "InternetOpenUrlA"
+	$string2 = "InternetOpenA" 
+	$string3 ="OpenSCManagerA"
+	$string4 = "ADVAAPI32.dll"
+condition:
+	filesize < 10MB and uint16(0) == 0x5A4D and uint16(uint16(0x3C)) == 0x00004550 and ( $string1 or $string2 or $string3 or $string4)
+}
+
+rule lab13exe
+{
+strings:
+	$string1 = "ole32.vd"
+	$string2 = "OLEAUTLA" 
+	$string3 = "_getmas"
+condition:
+	filesize < 10MB and uint16(0) == 0x5A4D and uint16(uint16(0x3C)) == 0x00004550 and $string1 and $string2 and $string3
+}
+rule lab14exe
+{
+strings:
+	$string1 = "LoadResource"
+	$string2 = "FindResource" 
+	$string3 = "SizeofResource"
+	$string4 = "\\system32\\wupdmgr.exe"
+	$string5 = "http://www.practicalmalwareanalysis.com/updater.exe"
+condition:
+	filesize < 10MB and uint16(0) == 0x5A4D and uint16(uint16(0x3C)) == 0x00004550 and $string1 and $string2 and $string3 and $string4 and $string5
+}
